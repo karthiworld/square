@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Squares lit</title>
+</head>
+<body>
+
+<div id="container"></div><br>
+
+<div class="color_value">
+
+  <table border="1" style="text-align: center;">
+
+     <caption>Lit Counts</caption>
+
+    <tr>
+
+      <th>BLUE</th>
+
+      <th>RED</th>
+
+    </tr>
+
+    <tr>
+
+      <td class="blue_value">0</td>
+
+      <td class="red_value">0</td>
+
+    </tr>
+
+  </table>
+
+</div>
+
+<script type="text/javascript">
+
+ 
+
+    document.createSvg = function(tagName) {
+
+        var svgNS = "http://www.w3.org/2000/svg";
+
+        return this.createElementNS(svgNS, tagName);
+
+
+
+    };
+
+    
+
+    var grid = function(numberPerSide, size, pixelsPerSide, colors) {
+
+        var color3 = "blue";
+
+        var svg = document.createSvg("svg");
+
+        svg.setAttribute("width", pixelsPerSide);
+
+        svg.setAttribute("height", pixelsPerSide);
+
+        svg.style.border = "1px solid lightgray";
+
+        svg.setAttribute("viewBox", [0, 0, numberPerSide * size, numberPerSide * size].join(" "));
+
+        
+
+        for(var i = 0; i < numberPerSide; i++) {
+
+            for(var j = 0; j < numberPerSide; j++) {
+
+              var color1 = colors[0];
+
+              var color2 = colors[1];  
+
+              var g = document.createSvg("g");
+
+              g.setAttribute("transform", ["translate(", i*size, ",", j*size, ")"].join(""));
+
+              var number = numberPerSide * i + j;
+
+              var box = document.createSvg("rect");
+
+              box.setAttribute("width", size);
+
+              box.setAttribute("height", size);
+
+              box.setAttribute("fill", color1);
+
+              box.style.stroke = "lightgray";
+
+              box.style.cursor = "pointer";
+
+              box.setAttribute("id", "b" + number); 
+
+              g.appendChild(box);
+
+              svg.appendChild(g);
+
+            }  
+
+        }
+
+        svg.addEventListener(
+
+            "click",
+
+            function(e){
+
+              
+
+                var id = e.target.id;
+
+                if(id){
+
+                    document.getElementById(id).addEventListener('mouseover', function(e) {
+
+                        
+
+                      });
+
+                    document.getElementById(id).setAttribute("fill", color3);
+
+                    document.getElementById(id).setAttribute("class", color3);
+
+                    document.getElementById(id).removeAttribute("id");
+
+                    if(color3 == "blue"){
+
+                      color3 = "red";
+
+                    }else{
+
+                      color3 = "blue"
+
+                    }
+
+                      var arr1 = document.getElementsByClassName("blue");
+
+                      var arr2 = document.getElementsByClassName("red");
+
+                    
+
+                    document.getElementsByClassName("blue_value")[0].innerHTML =arr1.length;
+
+                    document.getElementsByClassName("red_value")[0].innerHTML =arr2.length;
+
+                  }
+
+              
+
+
+
+            },
+
+            false);
+
+        svg.addEventListener(
+
+            "mouseover",
+
+            function(e){
+
+              
+
+                var id = e.target.id;
+
+                if(id){
+
+                       document.getElementById(id).setAttribute("fill", color3); 
+
+              }
+
+
+
+            },
+
+            false);
+
+        svg.addEventListener(
+
+            "mouseout",
+
+            function(e){
+
+              
+
+                var id = e.target.id;
+
+                if(id){
+
+                       document.getElementById(id).setAttribute("fill", color1); 
+
+              }
+
+
+
+            },
+
+            false);
+
+        return svg;
+
+    };
+
+    
+
+    var container = document.getElementById("container");
+
+    container.appendChild(grid(5, 10, 300, ["white","lightgray"]));
+
+
+</script>
+
+</body>
+
+</html>
+
